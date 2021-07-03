@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Promise-then-Chain calls</title>
+	</head>
+	<body>
+        <p>Promise-then-Chain calls</p>
+		<script>
+			// resolve状态成功示例
+			const a = new Promise((resolve,reject)=>{
+				resolve('resolve');
+				console.log('constructor');
+			}).then(res=>{
+				console.log(res);
+			});
+			console.log(a);
+
+			// reject状态失败示例
+			const b = new Promise((resolve,reject)=>{
+				reject('reject');
+				console.log('constructor');
+			}).then(res=>{
+				console.log(res);
+			}, error=>{
+				console.log('error:'+error);
+			});
+			console.log(b);
+
+			// then()函数返回的是一个新的PromiseB实例,新PromiseB实例的状态不受原来PromiseA状态的影响
+			const c = new Promise((resolve,reject)=>{
+				reject('c rejected');
+			})
+			const d = new Promise((resolve,reject)=>{
+				resolve('rejected');
+				console.log('constructor');
+			}).then(res => {
+				return c;
+			}, error => {
+				console.log('error:'+error);
+			}).then(res => {}, error => {
+				console.log('then error:'+error);
+			})
+			console.log(d);
+
+			// exercise红绿灯
+			function light(color){
+				return new Promise((resolve,reject) => {
+					setTimeout(()=>{
+						console.log(color);
+						resolve();
+					},1000)
+				})
+			}
+			function cycle(){
+				light('red').then(res => {
+					return light('yellow');
+				}).then(res => {
+					return light('green');
+				}).then(res => {
+					return cycle();
+				})
+			}
+			cycle();
+		</script>
+	</body>
+</html>
+<!-- 链式调用
+then()方法返回的是一个新的promise实例：promise A（这个不是原来那个Promise实例)，所以我们才可以链式调用then方法。
+这个promise A实例的状态不受原来Promise执行状态的影响。
+默认then()方法返回的promise实例是成功的(resilved),但如果前面一个then()方法返回的仍然是一个promise B (不是then()方法默认的promise A)，
+那么then()方法生成的promise实例A的状态与实例B的状态一致。 -->
