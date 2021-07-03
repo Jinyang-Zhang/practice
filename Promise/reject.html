@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Promise-reject</title>
+	</head>
+	<body>
+        <p>Promise-reject</p>
+		<script>
+			// Promise.reject()方法的参数，会原封不动的作为reject的理由，变成后续方法的参数
+			const a = new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					resolve('resolved');
+				},1000)
+			});
+			const b = Promise.reject(a);
+			b.then(res=>{
+				consle.log(res);
+			},error=>{
+				// 输出error:[object Promise]
+				console.log('error:'+error);
+			})
+		</script>
+	</body>
+</html>
+<!-- reject():
+Promise.reject()返回新的Promise的实例，状态一定是rejected。 -->
