@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Promise-then-ThroughTransfer</title>
+	</head>
+	<body>
+        <p>Promise-then-ThroughTransfer</p>
+		<script>
+			// resolve的数据如果空执行then()方法，可以传递上一个then()的结果
+			new Promise((resolve,reject)=>{
+				resolve('resolve');
+			}).then().then(res=>{
+				console.log(res); // resolve
+			})
+
+			// 链式调用，如果其中一个失败且没有对应函数处理，导致后面的链式中断
+			const a = new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					resolve('resolve');
+				},1000)
+			}).then(res=>{
+				console.log(res);
+				return Promise.reject('reject');
+			}).then(res=>{
+				console.log('then');
+			}).then(res=>{
+				console.log('last');
+			});
+			// resolve
+		</script>
+	</body>
+</html>
+<!-- 穿透传递：
+穿透传递resolve的数据异步执行，then()函数里面传递两个参数res=>{},error={},
+分别表示resolved成功和rejected的时候执行。
+如果promise的状态是pending,then里面的回调函数是不会执行的。 -->
