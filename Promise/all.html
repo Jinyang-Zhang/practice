@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Promise-all</title>
+	</head>
+	<body>
+        <p>Promise-all</p>
+		<script>
+			// Promise.all()接受一个数组，a1,a2,a3都是Promise实例，
+			// 如果不是，会先调用Promise.resolved()将参数转为Promise实例
+			const a = Promise.all([a1,a2,a3]);
+
+			// a的状态由a1,a2,a3决定
+			// a1,a2,a3状态都变成fulfilled,a状态才是a3状态都变成fulfilled，返回数组
+			const b = new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					resolve('b');
+				},1000)
+			});
+			const c = new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					resolve('c');
+				},200)
+			});
+			Promise.all([c,d]).then(res=>{
+				cosnole.log(res)
+			},error=>{
+				console.log('error:'+error)
+			})
+			//1秒后，输出[c,d]
+
+			//a1,a2,a3中有一个被rejected,a就变成rejected
+			const e = new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					reject('e');
+				},1000)
+			});
+			const f = new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					resolve('f');
+				},200)
+			});
+			Promise.all([e,f]).then(res=>{
+				cosnole.log(res)
+			},error=>{
+				console.log('error:'+error)
+			})
+			//1秒后，输出erroe:e
+		</script>
+	</body>
+</html>
+<!-- all():
+Promise.all()方法用于将多个Promise实例，包装成一个新的Promise实例。 -->
