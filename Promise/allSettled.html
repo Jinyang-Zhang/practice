@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Promise-allSettled</title>
+	</head>
+	<body>
+        <p>Promise-allSettled</p>
+		<script>
+			const a = new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					resolve('a');
+				},1000)
+			});
+			const b = Promise.reject('b');
+			Promise.allSettled([a,b]).then(res=>{
+				console.log(res)
+			});
+			//1秒后，输出
+			//[{status: "fulfilled",value: "p"},
+			// {reason: "rejected",status: "rejected"}]
+		</script>
+	</body>
+</html>
+<!-- allSettled():
+Promise.allSettled()方法用于将多个Promise实例，包装成一个新的Promise实例。
+只有等这些参数实例都返回结果，不管是rejected还是resolved，包装实例才会结束。 -->
