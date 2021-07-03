@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Promise-race</title>
+	</head>
+	<body>
+        <p>Promise-race</p>
+		<script>
+			// Promise.race()接受一个数组，a1,a2,a3都是Promise实例，
+			// 只要a1,a2,a3之中有一个实例率先改变状态，a的状态就跟着改变。
+			// 那个率先改变的 Promise 实例的返回值，就传递给a的回调函数。
+			const a = Promise.race([a1,a2,a3]);
+
+			const b = new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					reject('b');
+				},1000)
+			});
+			const c = new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					resolve('c');
+				},200)
+			});
+			Promise.race([c,d]).then(res=>{
+				cosnole.log(res)
+			},error=>{
+				console.log('error:'+error)
+			})
+			//0.2秒后，输出[c]
+		</script>
+	</body>
+</html>
+<!-- race():
+Promise.race()方法用于将多个Promise实例，包装成一个新的Promise实例。 -->
