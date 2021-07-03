@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Promise</title>
+	</head>
+	<body>
+        <p>Promise</p>
+		<script>
+			const promise = new Promise(function(resolve,reject){
+				if (true/*异步操作成功*/){
+					resolve(value)
+				} else {
+					reject(value)
+				}
+			})
+		</script>
+	</body>
+</html>
+<!-- Promise构造函数接受一个函数作为参数，该函数的两个参数分别是resolve和reject，
+他们是两个函数，由JavaScript引擎提供，不用自己部署。
+当我们 new Promise(excutor)的时候，Promise的构造函数里会执行函数excutor(resolve,reject);
+resolve和reject是Promise内部的变量(函数类型)。
+new Promise是同步代码。 -->
