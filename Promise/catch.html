@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Promise-catch</title>
+	</head>
+	<body>
+        <p>Promise-catch</p>
+		<script>
+			// 任何异常都可以在最后的catch中处理，链式调用中断
+			const a = new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					resolve('resolve');
+				},1000)
+			}).then(res=>{
+				console.log(res);
+				return Promise.reject('reject');
+			}).then(res=>{
+				console.log('then');
+			}).then(res=>{
+				console.log('last');
+			}).catch(e=>{
+				console.log('reason:'+e)
+			});
+			// resolve
+			// reason:reject
+
+			// catch()方法返回的还是Promise对象，后面还可以接then()方法
+			const a = new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					resolve('resolve');
+				},1000)
+			}).then(res=>{
+				console.log(res);
+				return Promise.reject('reject');
+			}).catch(e=>{
+				console.log('reason:'+e)
+			}).then(res=>{
+				console.log('then');
+			}).then(res=>{
+				console.log('last');
+			})
+			// resolve
+			// reason:reject
+			// then
+			// last
+		</script>
+	</body>
+</html>
+<!-- catch():
+Promise.prototype.catch()方法是.then(null,rejection)或
+.then(undefined,rejection)的别名，用于指定发生错误时的回调函数。 -->
