@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Promise-resolve</title>
+	</head>
+	<body>
+        <p>Promise-resolve</p>
+		<script>
+			Promise.resolve('value')
+			// 等价于
+			new Promise((resolve,reject)=>{
+				resolve('value')
+			})
+
+			// 参数是一个Promise实例，Promise.resolve原封不动返回实例
+			const a = new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					reject('reject');
+				},1000)
+			});
+			const b = Promise.resolve(a);
+			b.then(res=>{
+				consle.log(res);
+			},error=>{
+				// 输出a
+				console.log('error:'+error)
+			})
+
+			// 参数是一个原始值，Promise.resolve()返回一个新的Promise对象，状态为resolved
+			const c = Promise.resolve('resolved');
+			c.then(res=>{
+				// 输出resolved
+				console.log(res)
+			}, error=>{
+				console.log('error:'+error)
+			})
+		</script>
+	</body>
+</html>
+<!-- resolve():
+Promise.resolve()可以将现有的对象转化为Promise对象 -->
