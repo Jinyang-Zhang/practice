@@ -81,4 +81,13 @@ class MyPromise {
 			}
 		})
 	}
+	static resolve(promise) {
+		return new MyPromise((resolve, reject) => {
+			if (promise instanceof MyPromise) {
+				promise.then(resolve, reject);
+			} else {
+				resolve(promise);
+			}
+		})
+	}
 }
