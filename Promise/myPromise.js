@@ -112,4 +112,15 @@ class MyPromise {
 			})
 		})
 	}
+	static race(promises) {
+		return new MyPromise((resolve, reject) => {
+			promises.forEach(item => {
+				Promise.resolve(item).then(res=>{
+					resolve(res);
+				},error=>{
+					reject(error);
+				})
+			})
+		})
+	}
 }
