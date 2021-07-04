@@ -90,4 +90,9 @@ class MyPromise {
 			}
 		})
 	}
+	static reject(promise) {
+		return new MyPromise((resolve, reject) => {
+			reject(promise);
+		})
+	}
 }
