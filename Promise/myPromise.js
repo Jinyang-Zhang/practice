@@ -123,4 +123,22 @@ class MyPromise {
 			})
 		})
 	}
+	static allSettled(promises) {
+		const result = [];
+		return new MyPromise((resolve, reject) => {
+			promises.forEach(item => {
+				Promise.resolve(item).then(res=>{
+					result.push(res)
+					if (result.length === promises.length) {
+						resolve(result)
+					}
+				},error=>{
+					result.push(error);
+					if (result.length === promises.length) {
+						resolve(result)
+					}
+				})
+			})
+		})
+	}
 }
