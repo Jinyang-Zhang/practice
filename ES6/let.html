@@ -48,6 +48,20 @@
 				tmp = 'abc'; // 报错
 				let tmp;
 			}
+
+			// 不允许重复声明
+			// let不允许在相同作用域内，重复声明同一变量。
+			function func(arg) {
+				let arg;
+			}
+			func()  // 报错
+			function func(arg) {
+				return
+				{
+					let arg;
+				}
+			}
+			func()  // 不报错
 		</script>
 	</body>
 </html>
