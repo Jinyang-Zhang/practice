@@ -31,6 +31,13 @@
 			// abc     设置循环变量那部分是一个父作用域
 			// abc     而循环体内部是一个单独的子作用于
 			// abc
+
+			// 不存在变量提升
+			console.log(varB); // undefined
+			var varB = 2;
+
+			console.log(letA); // 报错
+			let letA = 2;
 		</script>
 	</body>
 </html>
