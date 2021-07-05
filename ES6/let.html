@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ES6-let</title>
+	</head>
+	<body>
+        <p>ES6-let</p>
+		<script>
+			// 块级作用域
+			var varA = [];
+			for (var a = 0; a < 10; a++) {
+				varA[a] = function () {
+					console.log(a);
+				};
+			}
+			varA[6]();  // 10
+
+			let letB = [];
+			for (var b = 0; b < 10; b++) {
+				letB[b] = function () {
+					console.log(b);
+				};
+			}
+			letB[6](); // 6
+
+			for (let c = 0; c < 3; c++) {
+				let c = 'abc';
+				console.log(c)
+			}
+			// abc     设置循环变量那部分是一个父作用域
+			// abc     而循环体内部是一个单独的子作用于
+			// abc
+		</script>
+	</body>
+</html>
+<!-- all():
+Promise.all()方法用于将多个Promise实例，包装成一个新的Promise实例。 -->
