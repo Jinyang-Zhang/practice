@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ES6-deconstruction-array</title>
+	</head>
+	<body>
+        <p>ES6-deconstruction-array</p>
+		<script>
+			let [head, ...tail] = [1, 2, 3, 4];
+			head; // 1
+			tail; // [2,3,4]
+
+			// 如果解构不成功，变量的值就等于undefined
+			let [a] = [];  // a:undefined
+			let [b, c] = [1]  // a:1; c:undefined
+
+			// 不完全解构
+			let [a, [b], c] = [1, [2, 3], 4];
+			// a:1 b:2 c:4 
+
+			// 如果等号右边不是可遍历结构，那么将会报错
+			let [even] = 1;
+			let [even] = false;
+			let [even] = NaN;
+			let [even] = undefined;
+			let [even] = null;
+			let [even] = {};
+
+			// 默认值 只有当一个数组成员严格等于undefined，默认值才会生效
+			let [a = true] = [];  // a:true
+			let [a, b='wong'] = ['even', undefined];  // a:even b:wong
+			let [c = 1] = [undefined]; // c:1
+			let [d = 1] = [null];  // d:null
+
+			// 如果默认值是一个表达式，那么这个表达式是惰性求值的，用到才会求值
+			// 下方，因为x能取到值，所以不会执行函数f
+			function f() {
+				console.log('even');
+			}
+			let [x = f()] = [1];  // x:1
+
+			// 默认值可以引用解构赋值的变量，但该变量必须已经声明
+			let [x = 1, y = x] = [1, 2];  // x=1; y=2;
+			let [x = y, y = 1] = [];  // 报错y未赋值
+		</script>
+	</body>
+</html>
+数组的解构赋值：
+本质上，解构赋值属于“模式匹配”，只要等号两边的模式相同，左边的变量就会被赋予对应的值。
