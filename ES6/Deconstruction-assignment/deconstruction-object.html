@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ES6-deconstruction-object</title>
+	</head>
+	<body>
+        <p>ES6-deconstruction-object</p>
+		<script>
+			let {even, wong} = {even: 'aaa', wong: 'bbb'}; 
+			even;  // 'aaa'
+			wong;  // 'bbb'
+
+			// 如果解构失败，变量的值等于undefined
+			let {even} = {wong: 'aaa'};
+			even;  // undefined
+
+			// 如果变量名与属性名不一致
+			// even是匹配的模式，wong才是变量。真正被赋值的是变量，而不是模式。
+			let {even: wong} = {even: 'aaa', wong:'bbb'};
+			wong; // 'aaa'
+			even; // error
+
+			// 嵌套模式
+			const node = {
+				loc: {
+					start: {
+					line: 1,
+					column: 5
+					}
+				}
+			};
+			let { loc, loc: { start }, loc: { start: { line }} } = node;
+			loc; // Obj {start: Object}
+			start; // Object {line: 1, column: 5}
+			line; // 1 最后一次对line属性的解构赋值之中，只有line是变量
+
+			let obj = {};
+			let arr = [];
+			({ foo: obj.prop, bar: arr[0] } = { foo: 123, bar: true });
+			obj; // {prop:123}
+			arr; // [true]
+
+			// 继承的属性
+			// 对象obj1的原型对象是obj2。foo属性不是obj1自身的属性，
+			// 而是继承自obj2的属性，解构赋值可以取到这个属性。
+			const obj1 = {};
+			const obj2 = { foo: 'bar' };
+			Object.setPrototypeOf(obj1, obj2);
+			const { foo } = obj1;
+			foo; // "bar"
+
+			// 默认值
+			// 默认值生效的条件是，对象的属性值严格等于undefined
+			var {x: y = 3} = {x: 5};
+			y; // 5
+			x; // 报错
+
+			var {x = 3} = {x: undefined};
+			x // 3
+
+			var {x = 3} = {x: null};
+			x // null
+
+			// 对数组进行对象属性的解构
+			// 数组arr的0键对应的值是1
+			let arr = [1, 2, 3];
+			let {0 : first, [arr.length - 1] : last} = arr;
+			first; // 1
+			last; // 3
+
+			// 注意点
+			let x;
+			// {x} = {x: 1} 报错
+			({x} = {x: 1}) // 正确
+		</script>
+	</body>
+</html>
+<!-- 对象的解构赋值：
+对象的属性没有次序，变量必须与属性同名，才能取到正确的值。 -->
