@@ -28,9 +28,9 @@
 			let [even] = {};
 
 			// 默认值 只有当一个数组成员严格等于undefined，默认值才会生效
-			let [a = true] = [];  // a:true
+			let [a = true] = [];  // a:true [].length=0
 			let [a, b='wong'] = ['even', undefined];  // a:even b:wong
-			let [c = 1] = [undefined]; // c:1
+			let [c = 1] = [undefined]; // c:1 [undefined].length=1
 			let [d = 1] = [null];  // d:null
 
 			// 如果默认值是一个表达式，那么这个表达式是惰性求值的，用到才会求值
