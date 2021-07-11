@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ES6-StringExtension</title>
+	</head>
+	<body>
+        <p>ES6-StringExtension</p>
+		<script>
+			// 模板字符串:用反引号（`）标识。
+            // 普通字符串
+            `In JavaScript '\n' is a line-feed.`
+            // 多行字符串
+            `In JavaScript this is
+             not legal.`
+            // 在字符串中嵌入变量
+            let name = "Bob", time = "today";
+            `Hello ${name}, how are you ${time}?`
+            // 如果在模板字符串中需要使用反引号，则前面要用反斜杠转义
+            let greeting = `\`Hello\` World`;
+            // 如果使用模板字符串表示多行字符串，所有缩进空格都会被保留
+            $('#list').html(`
+            <ul>
+                <li>first</li>
+            </ul>
+            `);
+            // 如果不想有换行，可以使用trim方法消除
+            $('#list').html(`
+            <ul>
+                <li>first</li>
+            </ul>
+            `.trim());
+            // 模板字符串中嵌入变量，需要将变量名写在$()中
+            // 大括号中可以放入任意的JavaScript表达式，可以进行运算，以及引用对象属性
+            let x = 1;
+            let y = 2;
+            `${x} + ${y} = ${x + y}`  // 1 + 2 = 3
+            let obj = {x: 1, y: 2};
+            `${obj.x + obj.y}`  // 3
+            // 模板字符串中还能调用函数
+            function fn() {
+                return "Hello world"
+            }
+            `foo ${fn()} bar`  // foo Hello World bar
+            // 模板字符串中变量不声明
+            let message = `Hello ${world}` // 报错
+            // 模板字符串中是普通字符串
+            `Hello $('World')`
+            // 模板字符串的嵌套
+            const tmpl = addrs => `
+                <table>
+                ${addrs.map(addr => `
+                    <tr><td>${addr.first}</td></tr>
+                    <tr><td>${addr.last}</td></tr>
+                `).join('')}
+                </table>
+            `;
+            const data = [
+                { first: '<Jane>', last: 'Bond' },
+                { first: 'Lars', last: '<Croft>' },
+            ];
+            console.log(tmpl(data));
+            // <table>
+            //
+            //   <tr><td><Jane></td></tr>
+            //   <tr><td>Bond</td></tr>
+            //
+            //   <tr><td>Lars</td></tr>
+            //   <tr><td><Croft></td></tr>
+            //
+            // </table>
+		</script>
+	</body>
+</html>
