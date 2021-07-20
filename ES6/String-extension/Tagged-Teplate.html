@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ES6-TaggedTeplate</title>
+	</head>
+	<body>
+        <p>ES6-TaggedTeplate</p>
+		<script>
+            // 无变量
+			alert`hello`
+            alert(['hello'])
+
+            // 有变量
+            let a = 5;
+            let b = 10;
+            tag`Hello ${a+b} world ${a*b}`;
+            tag(['Hello ','world ',''], 15, 50);
+            // 上面代码中，模板字符串前面有一个标识名tag，它是一个函数。
+            // 整个表达式的返回值，就是tag函数处理模板字符串后的返回值。
+            function tag(stringArr, val1, val2);
+            function tag(stringArr, ...values);
+            // 第一个参数：数组，数组的成员是模板字符串中没有变量替换的部分；
+            // 其他参数：模板字符串各个变量被替换后的值；
+		</script>
+	</body>
+</html>
+<!-- 标签模板：
+标签模板其实不是模板，而是函数调用的一种特殊形式。
+”标签”指的就是函数，紧跟在后面的模板字符串就是他的参数“。 -->
