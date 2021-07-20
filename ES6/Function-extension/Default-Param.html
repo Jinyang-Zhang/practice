@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ES6-DefaultParam</title>
+	</head>
+	<body>
+        <p>ES6-DefaultParam</p>
+		<script>
+            // 参数默认值
+            function log(x, y = 'World') {
+                console.log(x,y);
+                log('Hello');  // Hello World
+                log('Hello', 'China');  // Hello China
+                log('Hello', '');  // Hello
+            }
+
+            // 参数变量是默认声明的，不能用let或const再次声明’
+            function even(x = 5) {
+                let x = 1;  // error
+                const x = 2;  // error
+            }
+
+            // 使用参数默认值时，函数不能有同名参数
+            function even(x, x, y) {};  // correct
+            function even(x, x, y = 1);  // error
+
+            // 结合解构赋值
+            // 函数参数的默认值时空对象，但是设置了对象解构赋值的默认值。
+            function even1({x = 0, y = 0} = {}) {
+                return [x, y];  
+            }
+
+            // 函数参数的默认值时一个具有具体属性的对象，
+            // 但是没有设置对象的结构赋值的默认值
+            function even2({x, y} = {x: 0, y: 0}) {
+                return [x, y];  
+            }
+            // x有值，y无值
+            even1({x:3});  // [3, 0]
+            even2({x:3});  // [3, undefined]
+            // x，y都无值
+            even1({});  // [0, 0]
+            even2({});  // [undefined, undefined]
+            //
+            even1({z:1});  // [0, 0]
+            even2({z:1});  // [undefined, undefined]
+
+            // 默认值的位置
+            // 如果非尾部的参数设置默认值，那么这个参数是无法省略的
+            function wong(x, y = 5, z) {
+                return [x, y, z];
+            }
+            f();  // [undefined, 5, undefined]
+            f(1);  // [1, 5, undefined]
+            f(1, 2);  // [1, 2, undefined]
+            f(1, '', 2);  // error
+            f(1, undefined, 2);  // [1, 5, 2]
+		</script>
+	</body>
+</html>
+<!-- 标签模板：
+标签模板其实不是模板，而是函数调用的一种特殊形式。
+”标签”指的就是函数，紧跟在后面的模板字符串就是他的参数“。 -->
