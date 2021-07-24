@@ -21,7 +21,7 @@ class MyPromise {
 		let reject = (reason) => {
 			if (this.state === MyPromise.PENDING) {
 				this.state = MyPromise.REJECTED;
-				this.value = value;
+				this.reason = reason;
 				this.rejectCallback.forEach(fn => fn(reason));
 			}
 		}

@@ -22,12 +22,12 @@
 					resolve('c');
 				},200)
 			});
-			Promise.race([c,d]).then(res=>{
-				cosnole.log(res)
+			Promise.race([b,c]).then(res=>{
+				console.log(res)
 			},error=>{
 				console.log('error:'+error)
 			})
-			//0.2秒后，输出[c]
+			//0.2秒后，输出'c'
 		</script>
 	</body>
 </html>

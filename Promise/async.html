@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Promise&Async</title>
+	</head>
+	<body>
+        <p>Promise&Async</p>
+		<script>
+			(async function () {
+				return '我是promise'
+			})()
+			// Promise {<resolve>: "我是Promise"}
+			(async function () {
+				return Promise.resolve('我是Promise');
+			})()
+
+			// 获取返回值
+			const demo = async function () {
+				return Promise.resolve('我是Promise');
+			}
+			demo.then(value => {
+				console.log(value)
+			})
+			// 我是Promise
+		</script>
+	</body>
+</html>
+<!-- async声明的函数的返回本质上是一个promise -->
