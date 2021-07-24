@@ -19,7 +19,7 @@
 			const demo = async function () {
 				return Promise.resolve('我是Promise');
 			}
-			demo.then(value => {
+			demo().then(value => {
 				console.log(value)
 			})
 			// 我是Promise

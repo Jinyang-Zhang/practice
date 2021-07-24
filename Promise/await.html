@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Promise&Await</title>
+	</head>
+	<body>
+        <p>Promise&Await</p>
+		<script>
+			const demo = async function () {
+				let result = await new Promise ((resolve, reject) => {
+					setTimeout(() => {
+						let message = '我延迟了一秒'
+						let result = resolve(message)
+						console.log(message)
+					},1000)
+				});
+				console.log('我是由于上面程序还没执行完，先不执行等待一会')
+				return result;
+			}
+			demo().then(result => {
+				console.log('输出', result)
+			})
+			// 我延迟了一秒
+			// 我由于上面的程序还没执行完，先不执行等待一会
+			// 输出 我延迟了一秒
+		</script>
+	</body>
+</html>
+<!-- await的本质是可以提供等同于“同步效果”的等待异步返回能力的语法糖
+用await声明的Promise异步返回，必须“等待”到有返回值的时候，代码才继续执行下去。 -->
