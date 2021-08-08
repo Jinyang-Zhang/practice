@@ -1,6 +1,6 @@
 class MyPromise {
 	static PENDING = 'pending';
-	static RESOLVED = 'resolved';
+	static FULFILLED = 'fulfilled';
 	static REJECTED = 'rejected';
 	constructor(excutor) {
 		this.state = MyPromise.PENDING;
@@ -13,7 +13,7 @@ class MyPromise {
 		let resolve = (value) => {
 			//只有 PENDING 状态才可以被修改，保证 MyPromise 状态的不可逆
 			if (this.state === MyPromise.PENDING) {
-				this.state = MyPromise.RESOLVED;
+				this.state = MyPromise.FULFILLED;
 				this.value = value;
 				this.resolveCallback.forEach(fn => fn(value));
 			}
@@ -33,9 +33,9 @@ class MyPromise {
 			reject(e);
 		}
 	}
-	then(onResolved, onRejected) {
-		if (typeof onResolved !== 'function') {
-			onResolved = value => value;
+	then(onFulfilled, onRejected) {
+		if (typeof onFulfilled !== 'function') {
+			onFulfilled = value => value;
 		}
 		if (typeof onRejected !== 'function') {
 			onRejected = reason => reason;
@@ -45,7 +45,7 @@ class MyPromise {
 			// 异步代码，then 方法比 resolve 先执行的。回调函数要缓存起来
 			if (this.state === MyPromise.PENDING) {
 				this.resolveCallback.push(() => {
-					const result = onResolved(this.value);
+					const result = onFulfilled(this.value);
 					if (result instanceof MyPromise) {
 						result.then(resolve,reject);
 					} else {
@@ -60,9 +60,9 @@ class MyPromise {
 						reject(reason);
 					}
 				})
-			} else if (this.state === MyPromise.RESOLVED) {
+			} else if (this.state === MyPromise.FULFILLED) {
 				setTimeout(() => {
-					const result = onResolved(this.value);
+					const result = onFulfilled(this.value);
 					if (result instanceof MyPromise) {
 						result.then(resolve,reject);
 					} else {
