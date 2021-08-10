@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ES6-NameAttribute</title>
+	</head>
+	<body>
+        <p>ES6-NameAttribute</p>
+		<script>
+            function foo() {}
+            foo.name  // "foo"
+
+            // 匿名函数
+            var f = function () {}
+            f.name  // "" ES5
+            f.name  // "f" ES6
+
+            // 具名函数
+            var f = function foo () {}
+            foo.name  // "foo" ES5
+            foo.name  // "foo" ES6
+            
+            // 构造函数
+            (new Function).name  // "anoymous"
+
+            // bind返回的函数 name属性值会加上bound前缀
+            function foo() {};
+            foo.bind({}).name  // "bound foo"
+            (function(){}).bind({}).name  // "bound"
+		</script>
+	</body>
+</html>
+<!-- name属性：
+返回该函数的函数名。 -->
