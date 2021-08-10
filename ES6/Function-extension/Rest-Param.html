@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ES6-RestParam</title>
+	</head>
+	<body>
+        <p>ES6-RestParam</p>
+		<script>
+            function push(array, ...items) {
+                items.foreach(function(item) {
+                    array.push(item);
+                    console.log(item);
+                });
+            }
+            var a = [];
+            push(a,1,2,3)
+
+            // rest参数之后不能再有其他参数
+            function f(a, ...b, c) {
+                // 报错
+            }
+
+            // 函数的length属性，不包括rest参数
+            (function(a) {}).length  // 1
+            (function(...a) {}).length  // 0
+            (function(a, ...b) {}).length  // 1
+		</script>
+	</body>
+</html>
+<!-- rest参数：
+rest参数搭配的变量是一个数组，
+该变量将多余的参数放入数组中。 -->
