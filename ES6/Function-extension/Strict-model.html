@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ES6-StrictModle</title>
+	</head>
+	<body>
+        <p>ES6-StrictModle</p>
+		<script>
+            // ES5 严格模式
+            function doSomething(a,b) {
+                'use strict';
+                // code
+            }
+
+            const doSomething = (...a) => {
+                'use strict'
+                // 报错
+            }
+
+            // 规避方法
+            // 设定全局的严格模式
+            'use strict'
+            function doSomething(a, b=a) {
+                // code
+            }
+
+            // 函数包在一个无参数的立即执行函数里面
+            const doSomething = (function () {
+                'use strict';
+                return function(value = 42) {
+                    return value;
+                };
+            }());
+		</script>
+	</body>
+</html>
+<!-- 严格模式：
+只要函数参数使用了默认值、解构赋值、或者扩展运算符，
+那么函数内部就不能显式设定为严格模式，否则会报错。 -->
