@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ES6-generate-yield</title>
+	</head>
+	<body>
+        <p>ES6-generate-yield</p>
+		<script>
+            // yield表达式后面的表达式，只有当调用next方法，内部指针只想该语句时才会执行
+            // 因此等于为JSt提供了手动的“惰性求值”的语法功能。
+            function* gen() {
+                yield  123 + 456;  // 在next方法将指针移到这一句时，才会求值
+            }
+            // Generate函数可以不用yield表达式，这时就变成了一个单纯的暂缓执行函数
+            function* f() {
+                console.log('执行了！')
+            }
+            var generate = f();
+            setTimeout(function() {
+                generate.next()   // 走到这一步才会真正执行
+            }, 2000)
+            // 2秒后 ’执行了！‘
+
+            // yeild表达式如果用在另一个表达式中 必须放在圆括号里
+            function* demo() {
+                console.log('Hello' + yield); // 报错
+                console.log('Hello' + (yield)); // 正常
+            }
+
+            // yeild表达式用作函数参数或放在赋值表达式的右边，可以不加括号
+            function* demo() {
+                foo(yield 'a', yield 'b');
+                let input = yield;
+            }
+		</script>
+	</body>
+</html>
+<!-- yield表达式：
+Generate函数返回的遍历器对象，只有调用next方法才会遍历下一个内部状态，
+所以提供了一种可以暂停执行的函数。yield表达式就是暂停标志。 -->
