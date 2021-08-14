@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ES6-generate-Iterator-Relationship</title>
+	</head>
+	<body>
+        <p>ES6-generate-Iterator-Relationship</p>
+		<script>
+            // Generator函数是遍历器生成函数，可以把Generator赋值给对象的Symbol.iterator属性
+            // 从而使得该对象具有Iteration接口
+            var myIterable = {};
+            myIterable[Symbol.iterator] = function* () {
+                yield 1;
+                yield 2;
+                yield 3;
+            };
+            [...myIterable] // [1,2,3]
+            // Generate函数执行后，返回一个遍历器对象
+            // 该对象本身也具有Symbol.iterator属性，执行后返回自身
+            function* gen() {
+                // some code
+            };
+            var g = gen();
+            g[Symbol.iterator]() === g  // true
+		</script>
+	</body>
+</html>
+<!-- 与Iterator接口的关系：
+任意一个对象的Symbol.iterator方法，等于该对象的遍历器生成函数，
+调用该函数会返回该对象的一个遍历器对象。 -->
