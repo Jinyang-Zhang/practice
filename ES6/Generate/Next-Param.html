@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ES6-generate-NextParam</title>
+	</head>
+	<body>
+        <p>ES6-generate-NextParam</p>
+		<script>
+            function* f() {
+                for(var i = 0; true; i++) {
+                    var reset = yield i;
+                    if (reset) {i = -1}
+                }
+            }
+            var g = f();
+            g.next() // {value: 0, done: false}
+            g.next() // {value: 1, done: false}
+            g.next(true) // {value: 0, done: false}
+            // 如果next方法没有参数，每次运行到yield表达式，变量reset的值总是undefined。
+            // 当next方法带一个参数true时，变量就被重置为这个参数，i变为-1。
+
+            function* dataConsumer() {
+                console.log('Started');
+                console.log(`1. ${yield}`);
+                console.log(`2. ${yield}`);
+                return 'result';
+            }
+
+            let genObj = dataConsumer();
+            genObj.next();
+            // Started
+            genObj.next('a')
+            // 1. a
+            genObj.next('b')
+            // 2. b
+		</script>
+	</body>
+</html>
+<!-- next方法的参数：
+yield表达式本身没有返回值，或者说总是返回undefined.
+next方法可以带一个参数，该参数会被当做上一个yield表达式的返回值。 -->
