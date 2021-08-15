@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ES6-generate-prototypeThrow</title>
+	</head>
+	<body>
+        <p>ES6-generate-prototypeThrow</p>
+		<script>
+            var g = function* () {
+                try {
+                    yield;
+                } catch(e) {
+                    console.log('内部捕获', e);
+                }
+            };
+            var i = g();
+            i.next();
+            try {
+                i.throw('a');
+                i.throw('b');
+            } catch (e) {
+                console.log('外部捕获', e);
+            }
+            // 内部捕获 a
+            // 外部捕获 b
+            // 连续抛出两个错误，第一个错误被Generator函数体内catch捕获。
+            // 第二次抛出错误，函数内部catch已被执行，不会再捕获这个错误，所以被throw捕获。
+
+            // throw可以接受一个参数，该参数会被catch语句接收，建议抛出Error对象的实例
+            var g = function* () {
+                try {
+                    yield;
+                } catch(e) {
+                    console.log(e);
+                }
+            };
+            var i = g();
+            i.next();
+            i.throw(new Error('出错了')) 
+            // Error: 出错了
+
+            // 如果Generator函数内部没有部署try...catch，那么throw抛出的错误会被外部接收
+            var g = function* () {
+                yield;
+                console.log('内部捕获');
+            };
+            var i = g();
+            i.next();
+            try {
+                i.throw('出错了')
+            } catch (e) {
+                console.log('外部捕获',e)
+            }
+            // 外部捕获， 出错了
+
+            // 如果Generator函数内部和外部都没有try...catch，那么程序直接报错中断
+            var g = function* () {
+                yield console.log('hello');
+                yield console.log('world');
+            }
+            var i = g();
+            i.next();
+            i.throw();
+            // hello;
+            // Uncaught undefined
+
+            // throw方法抛出的错误被内部捕获，前提是必须至少执行过一次next方法
+            function* g() {
+                try {
+                    yield 1;
+                } catch (e) {
+                    console.log('内部捕获');
+                }
+            }
+            var i = g();
+            i.throw(1);
+            // Uncaught 1
+
+            // throw方法被捕获以后，会附带执行一条yield表达式，会附带执行一次next方法
+            // 只要Generator函数内部部署了try...catch，那么遍历器的throw方法抛出的错误，不影响下一次遍历。
+            var g = function* () {
+                try {
+                    yield console.log('a')
+                } catch (e) {
+                    console.log(e)
+                }
+                yield console.log('b')
+                yield console.log('c')
+            }
+            var i = g();
+            i.next()  // a
+            i.throw()  // b
+            i.next()  // c
+
+            // 一旦Generator执行过程中抛出错误，就不会再执行下去。
+            // 如果此后还调用next方法，将返回一个value属性等于undefined、done为true的对象。
+		</script>
+	</body>
+</html>
+<!-- Generator.prototype.throw()：
+Generator函数返回的遍历器对象，都有一个throw方法。
+可以在函数体外抛出错误，然后在Generator函数体内捕获。 -->
