@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ES6-generate-ForOf</title>
+	</head>
+	<body>
+        <p>ES6-generate-ForOf</p>
+		<script>
+            function* foo() {
+                yield 1;
+                yield 2;
+                yield 3;
+                yield 4;
+                return 5;
+            }
+            for (let v of foo()) {
+                console.log(v);
+            }
+            // 1 2 3 4
+            // 一旦next方法的返回对象的done属性为true，for...of循环就会终止，
+            // 且不包含该对象的返回值
+            
+            // 除了for...of循环以外，扩展运算符（...）、解构赋值和Array.from方法内部调用的，都是遍历器接口。
+            // 这意味着，它们都可以将 Generator 函数返回的 Iterator 对象，作为参数。
+            // 扩展运算符
+            [...foo()]  // [1,2,3,4]
+
+            // Array.from方法
+            Array.from(foo())  // [1,2,3,4]
+
+            // 解构赋值
+            let [x,y] = foo();
+            x  // 1;
+            y  // 2;
+		</script>
+	</body>
+</html>
+<!-- for...of循环：
+for...of循环可以自动遍历Generate函数运行时生成的Iterator对象，
+且不再需要调用next方法。 -->
